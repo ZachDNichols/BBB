@@ -59,14 +59,13 @@ public class TaxDollar : MonoBehaviour
             {
                 if (grounded)
                 {
-                    Debug.Log("Called");
-                    body.velocity = Vector2.zero;
+                    body.linearVelocity = Vector2.zero;
                     float jt = jumpTime;
                     grounded = false;
                     while (jt > 0)
                     {
                         body.AddForce(Vector2.up * jumpForce);
-                        body.velocity = new Vector2(Random.Range(moveForce / 2, moveForce), body.velocity.y);
+                        body.linearVelocity = new Vector2(Random.Range(moveForce / 2, moveForce), body.linearVelocity.y);
                         jt = -Time.deltaTime;
                     }
                     moveForce = moveForce * -1;
@@ -80,21 +79,21 @@ public class TaxDollar : MonoBehaviour
             else
             {
                 yield return new WaitForSeconds(Random.Range(0,2f));
-                body.velocity = new Vector2(moveForce, -moveForce);
+                body.linearVelocity = new Vector2(moveForce, -moveForce);
                 yield return new WaitForSeconds(1f);
-                body.velocity = new Vector2(moveForce / 2, 0f);
+                body.linearVelocity = new Vector2(moveForce / 2, 0f);
                 yield return new WaitForSeconds(1f);
-                body.velocity = new Vector2(moveForce, moveForce);
+                body.linearVelocity = new Vector2(moveForce, moveForce);
                 yield return new WaitForSeconds(1f);
-                body.velocity = Vector2.zero;
+                body.linearVelocity = Vector2.zero;
                 yield return new WaitForSeconds(Random.Range(0,2f));
-                body.velocity = new Vector2(-moveForce, -moveForce);
+                body.linearVelocity = new Vector2(-moveForce, -moveForce);
                 yield return new WaitForSeconds(1f);
-                body.velocity = new Vector2(-moveForce / 2, 0f);
+                body.linearVelocity = new Vector2(-moveForce / 2, 0f);
                 yield return new WaitForSeconds(1f);
-                body.velocity = new Vector2(-moveForce, moveForce);
+                body.linearVelocity = new Vector2(-moveForce, moveForce);
                 yield return new WaitForSeconds(1f);
-                body.velocity = Vector2.zero;
+                body.linearVelocity = Vector2.zero;
             }
             yield return null;
         }
@@ -103,7 +102,7 @@ public class TaxDollar : MonoBehaviour
 
     IEnumerator deadShow()
     {
-        body.velocity = Vector2.zero;
+        body.linearVelocity = Vector2.zero;
         col.enabled = false;
         yield return new WaitForSeconds(4f);
     }
@@ -127,7 +126,7 @@ public class TaxDollar : MonoBehaviour
                     else
                     {
                         StopAllCoroutines();
-                        body.isKinematic = false;
+                        body.bodyType = RigidbodyType2D.Dynamic;
                         anim.SetBool(wing, true);
                         wingless = true;
                         StartCoroutine(invicibility());

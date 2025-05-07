@@ -30,11 +30,6 @@ public class BossTrigger : MonoBehaviour
     AnimationCurve animX;
     AnimationCurve animY;
     Keyframe[] keyframesY;
-    float toCameraX = 707.55f;
-    float toCameraY = 41.14f;
-
-    bool cameraMoveStarted = false;
-    bool cameraMoved = false;
 
 
     // Start is called before the first frame update
@@ -115,8 +110,8 @@ public class BossTrigger : MonoBehaviour
         yield return new WaitForSeconds(8.28f);
         btimeline.Stop();
         hearts.SetActive(true);
-        rb.velocity = Vector3.zero;
-        bBody.velocity = Vector3.zero;
+        rb.linearVelocity = Vector3.zero;
+        bBody.linearVelocity = Vector3.zero;
         Player.canMove = true;
         yield return new WaitForSeconds(1.3f);
         bossMusic.SetActive(true);

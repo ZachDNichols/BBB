@@ -49,7 +49,7 @@ public class Crab : MonoBehaviour
                 if (!isDead)
                 {
                     anim.SetBool(walk, true);
-                    body.velocity = new Vector2(moveForce, body.velocity.y);
+                    body.linearVelocity = new Vector2(moveForce, body.linearVelocity.y);
                     yield return null;
                     time = time - Time.deltaTime;
                 }
@@ -57,7 +57,7 @@ public class Crab : MonoBehaviour
                     break;
             }
             anim.SetBool(walk, false);
-            body.velocity = Vector2.zero;
+            body.linearVelocity = Vector2.zero;
             yield return new WaitForSeconds(Random.Range(minTime, maxTime));
             time = Random.Range(1, 3.5f);
 
@@ -66,14 +66,14 @@ public class Crab : MonoBehaviour
                 if (!isDead)
                 {
                     anim.SetBool(walk, true);
-                    body.velocity = new Vector2(-moveForce, body.velocity.y);
+                    body.linearVelocity = new Vector2(-moveForce, body.linearVelocity.y);
                     yield return null;
                     time = time - Time.deltaTime;
                 }
                 else
                     break;
             }
-            body.velocity = Vector2.zero;
+            body.linearVelocity = Vector2.zero;
             anim.SetBool(walk, false);
             yield return new WaitForSeconds(Random.Range(minTime, maxTime));
         }
@@ -96,9 +96,9 @@ public class Crab : MonoBehaviour
     {
         yield return null;
         sprite.flipY = true;
-        body.velocity = Vector3.zero;
+        body.linearVelocity = Vector3.zero;
         trans.position = new Vector3(trans.position.x, trans.position.y + .168f);
-        body.velocity = Vector3.zero;
+        body.linearVelocity = Vector3.zero;
         isDead = true;
         bricked = true;
         col.enabled = false;

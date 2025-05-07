@@ -124,8 +124,8 @@ public class Boss : MonoBehaviour
                 if (left)
                 {
                     anim.SetBool(jump, true);
-                    rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-                    rb.velocity = new Vector2(Random.Range(-1, -moveForce), rb.velocity.y);
+                    rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+                    rb.linearVelocity = new Vector2(Random.Range(-1, -moveForce), rb.linearVelocity.y);
                     isGrounded = false;
                     while (!isGrounded)
                     {
@@ -138,8 +138,8 @@ public class Boss : MonoBehaviour
                 else if (right)
                 {
                     anim.SetBool(jump, true);
-                    rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-                    rb.velocity = new Vector2(Random.Range(1, moveForce), rb.velocity.y);
+                    rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+                    rb.linearVelocity = new Vector2(Random.Range(1, moveForce), rb.linearVelocity.y);
                     isGrounded = false;
                     while (!isGrounded)
                     {

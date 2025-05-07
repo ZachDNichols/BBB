@@ -52,11 +52,11 @@ public class Sam : MonoBehaviour
     {
         while (!isDead)
         {
-            rb.velocity = new Vector2(rb.velocity.x, speed);
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, speed);
             anim.SetBool(thrust, true);
             yield return new WaitForSeconds(moveTime / 2);
             anim.SetBool(thrust, false);
-            rb.velocity = Vector2.zero;
+            rb.linearVelocity = Vector2.zero;
 
             if (tongue)
             {
@@ -88,19 +88,19 @@ public class Sam : MonoBehaviour
                 yield return new WaitForSeconds(Random.Range(0, 1f));
             }
 
-            rb.velocity = new Vector2(rb.velocity.x, speed);
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, speed);
             anim.SetBool(thrust, true);
             yield return new WaitForSeconds(moveTime / 2);
             anim.SetBool(thrust, false);
-            rb.velocity = Vector2.zero;
+            rb.linearVelocity = Vector2.zero;
 
             yield return new WaitForSeconds(1f);
 
-            rb.velocity = new Vector2(rb.velocity.x, -speed);
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, -speed);
             anim.SetBool(thrust, true);
             yield return new WaitForSeconds(moveTime / 2);
             anim.SetBool(thrust, false);
-            rb.velocity = Vector2.zero;
+            rb.linearVelocity = Vector2.zero;
             yield return new WaitForSeconds(0.5f);
 
             if (tongue)
@@ -133,11 +133,11 @@ public class Sam : MonoBehaviour
                 yield return new WaitForSeconds(Random.Range(0, 1f));
             }
 
-            rb.velocity = new Vector2(rb.velocity.x, -speed);
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, -speed);
             anim.SetBool(thrust, true);
             yield return new WaitForSeconds(moveTime / 2);
             anim.SetBool(thrust, false);
-            rb.velocity = Vector2.zero;
+            rb.linearVelocity = Vector2.zero;
             yield return new WaitForSeconds(Random.Range(0, 1f));
 
         }
@@ -177,9 +177,9 @@ public class Sam : MonoBehaviour
 
     IEnumerator deadShow() 
     {
-        rb.velocity = Vector3.zero;
+        rb.linearVelocity = Vector3.zero;
         tong.SetBool(stay, false);
-        rb.isKinematic = false;
+        rb.bodyType = RigidbodyType2D.Dynamic;
         anim.SetBool(tin, false);
         anim.SetBool(tin, false);
         anim.SetBool(thrust, false);

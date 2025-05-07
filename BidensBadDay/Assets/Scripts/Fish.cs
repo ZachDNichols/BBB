@@ -27,18 +27,18 @@ public class Fish : MonoBehaviour
     {
         while (true)
         {
-            rb.isKinematic = false;
-            rb.velocity = Vector2.zero;
+            rb.bodyType = RigidbodyType2D.Dynamic;
+            rb.linearVelocity = Vector2.zero;
             float ttime = jumpTime;
             float timeToFall = 0f;
             while(ttime > 0)
             {
-                rb.velocity = Vector2.up * moveForce;
+                rb.linearVelocity = Vector2.up * moveForce;
                 ttime -= Time.deltaTime;
                 yield return null;
             }
 
-            while (rb.velocity.y > 0f)
+            while (rb.linearVelocity.y > 0f)
             {
                 timeToFall += Time.deltaTime;
                 yield return null;
@@ -46,8 +46,8 @@ public class Fish : MonoBehaviour
             
             sr.flipY = true;
             yield return new WaitForSeconds((jumpTime * 1.6f) - (timeToFall * .95f));
-            rb.isKinematic = true;
-            rb.velocity = Vector2.zero;
+            rb.bodyType = RigidbodyType2D.Dynamic;
+            rb.linearVelocity = Vector2.zero;
             yield return new WaitForSeconds(Random.Range(0, 3));
             sr.sprite = sprites[0];
             sr.flipY = false;

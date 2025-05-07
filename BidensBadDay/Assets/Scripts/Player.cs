@@ -114,10 +114,10 @@ public class Player : MonoBehaviour
             movementX = Input.GetAxisRaw("Horizontal");
             if (movementX != 0)
             {
-                body.isKinematic = false;
+                body.bodyType = RigidbodyType2D.Dynamic;
             }
             
-            body.velocity = new Vector3(movementX * moveForce, body.velocity.y);
+            body.linearVelocity = new Vector3(movementX * moveForce, body.linearVelocity.y);
         }
     }
 
@@ -128,10 +128,10 @@ public class Player : MonoBehaviour
         {
             audioSource.PlayOneShot(dies);
             canMove = false;
-            body.velocity = Vector2.zero;
+            body.linearVelocity = Vector2.zero;
             dead = true;
             plBody.enabled = false;
-            body.velocity = new Vector2(body.velocity.x, jumpForce * 1.5f);
+            body.linearVelocity = new Vector2(body.linearVelocity.x, jumpForce * 1.5f);
             sr.flipY = true;
             Destroy(cameraController);
         }
@@ -153,11 +153,11 @@ public class Player : MonoBehaviour
                 audioSource.PlayOneShot(jumpSounds[UnityEngine.Random.Range(0, jumpSounds.Length - 2)]);
             }
 
-            body.isKinematic = false;
+            body.bodyType = RigidbodyType2D.Dynamic;
             anim.SetBool(jump, true);
             isJumping = true;
             jumpTimeCounter = jumpTime;
-            body.velocity = new Vector2(body.velocity.x, jumpForce);
+            body.linearVelocity = new Vector2(body.linearVelocity.x, jumpForce);
             isGrounded = false;
         }
         if (Input.GetKeyUp(KeyCode.Space))
@@ -168,7 +168,7 @@ public class Player : MonoBehaviour
         {
             if (jumpTimeCounter > 0)
             {
-                body.velocity = new Vector2(body.velocity.x, jumpForce);
+                body.linearVelocity = new Vector2(body.linearVelocity.x, jumpForce);
                 jumpTimeCounter -= Time.deltaTime;
             }
             else
@@ -195,14 +195,14 @@ public class Player : MonoBehaviour
             {
                 anim.SetBool(walk, true);
                 trans.transform.localScale = new Vector2(-1, 1);
-                body.isKinematic = false;
+                body.bodyType = RigidbodyType2D.Dynamic;
             }
             //Left
             else if (movementX < 0)
             {
                 anim.SetBool(walk, true);
                 trans.transform.localScale = new Vector2(1, 1);
-                body.isKinematic = false;
+                body.bodyType = RigidbodyType2D.Dynamic;
             }
             else
             {
@@ -217,7 +217,7 @@ public class Player : MonoBehaviour
     }
     private void fallCheck()
     {
-        if (body.velocity.y < -8f)
+        if (body.linearVelocity.y < -8f)
         {
             isFalling = true;
         }
@@ -251,7 +251,7 @@ public class Player : MonoBehaviour
         float time = kbTime;
         while (time > 0)
         {
-            body.velocity = new Vector3(kbForceX, kbForceY);
+            body.linearVelocity = new Vector3(kbForceX, kbForceY);
             yield return null;
             time = time - Time.deltaTime;
         }
@@ -298,7 +298,7 @@ public class Player : MonoBehaviour
                 float time = 0.2f;
                 while (time > 0)
                 {
-                    body.velocity = new Vector3(body.velocity.x, jumpForce);
+                    body.linearVelocity = new Vector3(body.linearVelocity.x, jumpForce);
                     yield return null;
                     time = time - Time.deltaTime;
 
@@ -378,8 +378,8 @@ public class Player : MonoBehaviour
                     isGrounded = true;
                 if (isGrounded && movementX == 0 && !isJumping)
                 {
-                    body.isKinematic = true;
-                    body.velocity = new Vector2(0f, 0f);
+                    body.bodyType = RigidbodyType2D.Kinematic;
+                    body.linearVelocity = new Vector2(0f, 0f);
                 }
                 break;
             case PLATFORM:
@@ -471,7 +471,7 @@ public class Player : MonoBehaviour
             audioSource.PlayOneShot(sfx[1]);
             GameObject temp = Instantiate(breaker, new Vector3(x + 2.26f, y - 0.1f), Quaternion.identity);
             isJumping = false;
-            body.velocity = new Vector3(body.velocity.x, 0f);
+            body.linearVelocity = new Vector3(body.linearVelocity.x, 0f);
             yield return new WaitForSeconds(1f);
             Destroy(temp);
     }

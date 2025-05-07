@@ -44,12 +44,12 @@ public class Triangle : MonoBehaviour
         {
             if (right)
             {
-                rb.velocity = new Vector3(moveForce, 0);
+                rb.linearVelocity = new Vector3(moveForce, 0);
                 yield return null;
             }
             else
             {
-                rb.velocity = new Vector3(-moveForce, 0);
+                rb.linearVelocity = new Vector3(-moveForce, 0);
                 yield return null;
             }
         }

@@ -66,7 +66,7 @@ public class TrumpBoss : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
         playerTrans = player.GetComponent<Transform>();
         rb = GetComponent<Rigidbody2D>();
-        rb.velocity = Vector3.zero;
+        rb.linearVelocity = Vector3.zero;
         col = GetComponent<PolygonCollider2D>();
         StartCoroutine(startCheck());
     }
@@ -106,7 +106,7 @@ public class TrumpBoss : MonoBehaviour
         }
         triangleAnim.SetBool(flash, false);
         warningTriangle.SetActive(true);
-        rb.isKinematic = false;
+        rb.bodyType = RigidbodyType2D.Dynamic;
         StartCoroutine(bossFight());
     }
 
@@ -131,10 +131,10 @@ public class TrumpBoss : MonoBehaviour
                 {
                     anim.SetTrigger(jump);
                     yield return new WaitForSeconds(0.26f);
-                    rb.isKinematic = true;
-                    rb.velocity = new Vector2(0f, 30f);
+                    rb.bodyType = RigidbodyType2D.Kinematic;
+                    rb.linearVelocity = new Vector2(0f, 30f);
                     yield return new WaitForSeconds(1.5f);
-                    rb.velocity = Vector2.zero;
+                    rb.linearVelocity = Vector2.zero;
                     trans.position = new Vector2(727f, 60f);
                     triangleAnim.SetBool(flash, true);
                     yield return new WaitForSeconds(2f);
@@ -142,13 +142,13 @@ public class TrumpBoss : MonoBehaviour
                     triangleAnim.SetBool(flash, false);
                     anim.SetBool(falling, true);
                     grounded = false;
-                    rb.isKinematic = false;
-                    rb.velocity = new Vector2(0f, -50);
+                    rb.bodyType = RigidbodyType2D.Dynamic;
+                    rb.linearVelocity = new Vector2(0f, -50);
                 }
                 //Run Attack
                 else if (action == 2)
                 {
-                    rb.isKinematic = true;
+                    rb.bodyType = RigidbodyType2D.Kinematic;
                     lookAtPlayer = false;
 
                     float leftDelta = trans.position.x - leftCoordX;
@@ -165,7 +165,7 @@ public class TrumpBoss : MonoBehaviour
                     for (int i = 0; i <= 3; i++)
                     {
                         anim.SetBool(run, true);
-                        rb.velocity = new Vector2(moveForce, 0f);
+                        rb.linearVelocity = new Vector2(moveForce, 0f);
                         //Going right
                         if (moveForce > 0)
                         {
@@ -188,13 +188,13 @@ public class TrumpBoss : MonoBehaviour
                         }
                         moveForce = -moveForce;
                         anim.SetBool(run, false);
-                        rb.velocity = Vector2.zero;
+                        rb.linearVelocity = Vector2.zero;
                         
                         yield return new WaitForSeconds(0.5f);
                     }
                     lookAtPlayer = true;
                     anim.SetBool(run, false);
-                    rb.velocity = Vector2.zero;
+                    rb.linearVelocity = Vector2.zero;
                     yield return new WaitForSeconds(1f);
 
 
@@ -224,7 +224,7 @@ public class TrumpBoss : MonoBehaviour
             case GROUND:
                 if (!grounded)
                 {
-                    rb.velocity = Vector2.zero;
+                    rb.linearVelocity = Vector2.zero;
                     grounded = true;
                     anim.SetBool(falling, false);
                 }
@@ -279,8 +279,8 @@ public class TrumpBoss : MonoBehaviour
 
     IEnumerator Dead()
     {
-        rb.velocity = Vector2.zero;
-        rb.isKinematic = false;
+        rb.linearVelocity = Vector2.zero;
+        rb.bodyType = RigidbodyType2D.Dynamic;
         gameObject.layer = 8;
         sr.flipY = true;
         col.isTrigger = true;

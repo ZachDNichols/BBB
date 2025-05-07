@@ -52,7 +52,7 @@ public class Trumplet : MonoBehaviour
                 if (!isDead)
                 {
                     anim.SetBool(walk, true);
-                    body.velocity = new Vector2(moveForce, body.velocity.y);
+                    body.linearVelocity = new Vector2(moveForce, body.linearVelocity.y);
                     yield return null;
                     time = time - Time.deltaTime;
                 }
@@ -60,7 +60,7 @@ public class Trumplet : MonoBehaviour
                     break;
             }
             anim.SetBool(walk, false);
-            body.velocity = Vector2.zero;
+            body.linearVelocity = Vector2.zero;
             yield return new WaitForSeconds(Random.Range(minTime, maxTime));
             time = Ttime;
             
@@ -69,14 +69,14 @@ public class Trumplet : MonoBehaviour
                 if (!isDead)
                 {
                     anim.SetBool(walk, true);
-                    body.velocity = new Vector2(-moveForce, body.velocity.y);
+                    body.linearVelocity = new Vector2(-moveForce, body.linearVelocity.y);
                     yield return null;
                     time = time - Time.deltaTime;
                 }
                 else
                     break;
             }
-            body.velocity = Vector2.zero;
+            body.linearVelocity = Vector2.zero;
             anim.SetBool(walk, false);
             yield return new WaitForSeconds(Random.Range(minTime, maxTime));
         }
@@ -130,9 +130,9 @@ public class Trumplet : MonoBehaviour
     {
         yield return null;
         sprite.flipY = true;
-        body.velocity = Vector3.zero;
+        body.linearVelocity = Vector3.zero;
         trans.position = new Vector3(trans.position.x, trans.position.y + .168f);
-        body.velocity = Vector3.zero;
+        body.linearVelocity = Vector3.zero;
         isDead = true;
         bricked = true;
         col.enabled = false;
@@ -144,7 +144,7 @@ public class Trumplet : MonoBehaviour
     {
         yield return null;
         sprite.flipY = true;
-        body.velocity = Vector2.zero;
+        body.linearVelocity = Vector2.zero;
         col.enabled = false;
         yield return new WaitForSeconds(1.2f);
         Destroy(gameObject);
